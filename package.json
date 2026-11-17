@@ -1,0 +1,15 @@
+{
+  "name": "bookshop-management-cds",
+  "version": "1.0.0",
+  "devDependencies": {
+    "@sap/cds-dk": "^10.1.0"
+  },
+  "dependencies": {
+    "@cap-js/hana": "^3.1.2"
+  },
+  "cds": {
+    "requires": {
+      "auth": "false"
+    }
+  }
+}

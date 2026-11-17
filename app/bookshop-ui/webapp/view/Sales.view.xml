@@ -1,0 +1,17 @@
+<mvc:View
+    controllerName="bookshop.ui.controller.Sales"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <f:DynamicPage headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading><Title text="Sales &amp; Special Offers"/></f:heading>
+                <f:actions><Button text="Dashboard" press=".onNavBack" icon="sap-icon://nav-back"/></f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <MessageStrip text="Special weekly promotions and clearance items are featured here (20% off selected bestsellers!)." type="Success" showIcon="true" class="sapUiResponsiveMargin"/>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

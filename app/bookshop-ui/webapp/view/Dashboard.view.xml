@@ -1,0 +1,54 @@
+<mvc:View
+    controllerName="bookshop.ui.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+
+    <f:DynamicPage id="dashboardPage" headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Bookshop Management Dashboard"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <VBox class="sapUiResponsiveContentPadding" width="100%">
+
+                <Title text="Bookshop Management &amp; Storefront" level="H2" class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
+
+                <HBox wrap="Wrap" class="sapUiMediumMarginBottom">
+                    <!-- Books Catalog Tile -->
+                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="Books Catalog" subheader="Explore &amp; search catalog" press=".onTilePress">
+                        <TileContent>
+                            <NumericContent icon="sap-icon://book" value="Catalog"/>
+                        </TileContent>
+                    </GenericTile>
+
+                    <!-- Order History Tile -->
+                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="Order History" subheader="View submitted orders" press=".onNavigateToOrders">
+                        <TileContent>
+                            <NumericContent icon="sap-icon://receipt" value="Orders"/>
+                        </TileContent>
+                    </GenericTile>
+
+                    <!-- Wishlist Tile -->
+                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="My Wishlist" subheader="Saved favorite books" press=".onNavigateToWishlist">
+                        <TileContent>
+                            <NumericContent icon="sap-icon://favorite" value="Wishlist"/>
+                        </TileContent>
+                    </GenericTile>
+
+                    <!-- Sales & Specials Tile -->
+                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="Sales &amp; Specials" subheader="Discounts &amp; clearance" press=".onNavigateToSales">
+                        <TileContent>
+                            <NumericContent icon="sap-icon://sales-order" value="Sales"/>
+                        </TileContent>
+                    </GenericTile>
+                </HBox>
+
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

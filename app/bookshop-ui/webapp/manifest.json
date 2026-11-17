@@ -1,0 +1,131 @@
+{
+  "_version": "1.40.0",
+  "sap.app": {
+    "id": "bookshop.ui",
+    "type": "application",
+    "title": "Bookshop Management Dashboard",
+    "description": "Fiori Dashboard for Bookshop Management System",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/catalog/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      },
+      "orderService": {
+        "uri": "/odata/v4/orders/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui5": {
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {}
+      }
+    },
+    "models": {
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "order": {
+        "dataSource": "orderService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "bookshop.ui.view.App",
+      "type": "XML",
+      "async": true
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "bookshop.ui.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "Dashboard",
+          "target": "Dashboard"
+        },
+        {
+          "pattern": "catalog",
+          "name": "Books",
+          "target": "Books"
+        },
+        {
+          "pattern": "detail/{bookId}",
+          "name": "Detail",
+          "target": "Detail"
+        },
+        {
+          "pattern": "orders",
+          "name": "OrderHistory",
+          "target": "OrderHistory"
+        },
+        {
+          "pattern": "wishlist",
+          "name": "Wishlist",
+          "target": "Wishlist"
+        },
+        {
+          "pattern": "sales",
+          "name": "Sales",
+          "target": "Sales"
+        }
+      ],
+      "targets": {
+        "Dashboard": {
+          "viewName": "Dashboard",
+          "viewLevel": 1
+        },
+        "Books": {
+          "viewName": "Books",
+          "viewLevel": 2
+        },
+        "Detail": {
+          "viewName": "BookDetail",
+          "viewLevel": 3
+        },
+        "OrderHistory": {
+          "viewName": "OrderHistory",
+          "viewLevel": 2
+        },
+        "Wishlist": {
+          "viewName": "Wishlist",
+          "viewLevel": 2
+        },
+        "Sales": {
+          "viewName": "Sales",
+          "viewLevel": 2
+        }
+      }
+    }
+  }
+}

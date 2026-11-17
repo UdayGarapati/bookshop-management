@@ -1,0 +1,4 @@
+ID,title,descr,author_ID,category_ID,isbn,coverImageURL,price,currency_code,discountPercentage,stock,unitsSold,averageRating
+book-01,Wuthering Heights,A classic novel of passion and tragedy on the Yorkshire moors.,auth-01,cat-01,9780141439556,https://images.unsplash.com/photo-1544947950-fa07a98d237f,12.50,EUR,10.00,15,120,4.50
+book-02,Design Patterns,Elements of Reusable Object-Oriented Software.,auth-02,cat-02,9780201633610,https://images.unsplash.com/photo-1532012197267-da84d127e765,45.00,EUR,0.00,8,340,4.80
+book-03,Cosmos,A personal voyage exploring the universe and science history.,auth-03,cat-03,9780345539434,https://images.unsplash.com/photo-1506880018603-83d5b814b5a6,19.99,EUR,15.00,25,210,4.90

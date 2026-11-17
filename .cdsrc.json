@@ -1,0 +1,15 @@
+{
+  "build": {
+    "target": ".",
+    "tasks": [
+      {
+        "src": "db",
+        "for": "hana"
+      },
+      {
+        "src": "srv",
+        "for": "java"
+      }
+    ]
+  }
+}

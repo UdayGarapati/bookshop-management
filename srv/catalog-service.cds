@@ -1,0 +1,13 @@
+using { my.bookshop as my } from '../db/schema';
+@path: 'catalog'
+service CatalogService {
+    @readonly
+    entity Books as projection on my.Books;
+
+    @readonly
+    entity Authors as projection on my.Authors;
+
+    @readonly
+    entity Categories as projection on my.Categories;
+}
+

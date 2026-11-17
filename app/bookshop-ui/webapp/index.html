@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookshop Management System</title>
+
+    <script
+      src="https://ui5.sap.com/1.120.2/resources/sap-ui-core.js"
+      data-sap-ui-libs="sap.m, sap.ui.core, sap.f"
+      data-sap-ui-async="true"
+      data-sap-ui-resourceroots='{
+            "bookshop.ui": "./"
+        }'
+      data-sap-ui-theme="sap_horizon"
+      data-sap-ui-oninit="module:sap/ui/core/ComponentSupport"
+      data-sap-ui-compatVersion="edge"
+      data-sap-ui-frameOptions="trusted"
+    ></script>
+  </head>
+  <body class="sapUiBody" id="content">
+    <div
+      data-sap-ui-component
+      data-name="bookshop.ui"
+      data-id="container"
+      data-settings='{"id" : "bookshopUI"}'
+    ></div>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<mvc:View
+    controllerName="bookshop.ui.controller.BookDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    
+    <f:DynamicPage id="detailPage">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{title}"/>
+                </f:heading>
+                <f:actions>
+                    <Button text="Back to Catalog" press=".onNavBack" icon="sap-icon://nav-back"/>
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        
+        <f:content>
+            <VBox class="sapUiResponsiveContentPadding">
+                <Panel headerText="Book Information" class="sapUiResponsiveMargin">
+                    <content>
+                        <VBox class="sapUiMediumMargin">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%" class="sapUiMediumMarginBottom">
+                                <Title text="{title}" level="H3"/>
+                                <HBox alignItems="Center">
+                                    <Label text="Order Quantity:" class="sapUiTinyMarginEnd" design="Bold"/>
+                                    <StepInput id="orderStepInput" value="1" min="1" max="100" width="120px" class="sapUiSmallMarginEnd"/>
+                                    <Button text="Place Order" press=".onOrderPress" type="Emphasized"/>
+                                </HBox>
+                            </HBox>
+                            
+                            <!-- Stock Status -->
+                            <ObjectStatus 
+                                text="{= ${stock} !== undefined ? ${stock} + ' in stock' : '0 in stock' }" 
+                                state="{= ${stock} > 0 ? 'Success' : 'Error' }"
+                                class="sapUiSmallMarginBottom"/>
+                            
+                            <!-- Description -->
+                            <Label text="Description" design="Bold" class="sapUiTinyMarginTop"/>
+                            <Text text="{descr}" wrapping="true" class="sapUiSmallMarginBottom"/>
+                            
+                            <!-- ISBN & Category -->
+                            <Label text="ISBN" design="Bold"/>
+                            <Text text="{isbn}" class="sapUiSmallMarginBottom"/>
+                            
+                            <!-- Price -->
+                            <Label text="Price" design="Bold"/>
+                            <ObjectNumber number="{price}" unit="{currency}"/>
+                        </VBox>
+                    </content>
+                </Panel>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

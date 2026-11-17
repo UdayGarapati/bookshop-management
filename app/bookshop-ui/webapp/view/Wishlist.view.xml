@@ -1,0 +1,51 @@
+<mvc:View
+    controllerName="bookshop.ui.controller.Wishlist"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f">
+    <f:DynamicPage headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="My Wishlist"/>
+                </f:heading>
+                <f:actions>
+                    <Button text="Dashboard" press=".onNavBack" icon="sap-icon://nav-back"/>
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:content>
+            <VBox class="sapUiResponsiveContentPadding" width="100%">
+                <Table 
+                    items="{
+                        path: 'order>/Wishlist',
+                        parameters: {
+                            '$expand': 'book($select=title,price)'
+                        }
+                    }"
+                    class="sapUiResponsiveMargin"
+                    width="auto">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Saved Favorite Books"/>
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column><Text text="Book Title"/></Column>
+                        <Column><Text text="Saved By User"/></Column>
+                        <Column hAlign="End"><Text text="Price"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <ObjectIdentifier title="{order>book/title}"/>
+                                <Text text="{order>userName}"/>
+                                <ObjectNumber number="{order>book/price}" unit="EUR"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

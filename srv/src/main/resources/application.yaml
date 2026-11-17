@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: bookshop-management
+  profiles:
+    active: hybrid
+
+cds:
+  security:
+    auth: none
+# cds bind --exec -- mvn spring-boot:run
