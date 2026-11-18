@@ -10,3 +10,4 @@ spring:
 cds:
   security:
     auth: none
+   
