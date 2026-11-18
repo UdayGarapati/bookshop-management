@@ -46,7 +46,7 @@
                             
                             <!-- Price -->
                             <Label text="Price" design="Bold"/>
-                            <ObjectNumber number="{price}" unit="{currency}"/>
+                            <ObjectNumber number="{price}" unit="{currency_code}"/>
                         </VBox>
                     </content>
                 </Panel>

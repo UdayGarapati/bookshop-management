@@ -11,23 +11,30 @@ sap.ui.define([
             oRouter.getRoute("Detail").attachMatched(this._onRouteMatched, this);
         },
 
-        _onRouteMatched: function (oEvent) {
-            var sBookId = oEvent.getParameter("arguments").bookId;
-            if (!sBookId) {
-                return;
-            }
+       _onRouteMatched: function (oEvent) {
+    var sBookId = oEvent.getParameter("arguments").bookId;
+    if (!sBookId) {
+        return;
+    }
 
-            var oView = this.getView();
-            
-            // Bind element directly to the selected book path via OData V4 with explicit key formatting
-            oView.bindElement({
-                path: "/Books('" + sBookId + "')",
-                parameters: {
-                    $$groupId: "$auto"
-                }
-            });
+    var oView = this.getView();
+    var oElementBinding = oView.byId("detailPage"); // or bind via element
+    
+    oView.bindElement({
+        path: "/Books(" + sBookId + ")",
+        parameters: {
+            $$groupId: "$auto"
         },
-
+        events: {
+            dataRequested: function () {
+                oView.setBusy(true);
+            },
+            dataReceived: function () {
+                oView.setBusy(false);
+            }
+        }
+    });
+},
         onNavBack: function () {
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("Books");

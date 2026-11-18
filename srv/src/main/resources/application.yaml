@@ -10,4 +10,3 @@ spring:
 cds:
   security:
     auth: none
-# cds bind --exec -- mvn spring-boot:run
