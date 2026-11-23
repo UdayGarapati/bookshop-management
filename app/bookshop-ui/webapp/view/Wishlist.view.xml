@@ -16,11 +16,11 @@
         </f:title>
         <f:content>
             <VBox class="sapUiResponsiveContentPadding" width="100%">
-                <Table 
+                <Table
                     items="{
                         path: 'order>/Wishlist',
                         parameters: {
-                            '$expand': 'book($select=title,price)'
+                            $expand: 'book'
                         }
                     }"
                     class="sapUiResponsiveMargin"

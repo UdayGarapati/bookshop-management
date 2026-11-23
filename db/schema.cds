@@ -1,6 +1,6 @@
 namespace my.bookshop;
 
-using { cuid, managed, sap.common.Currencies} from '@sap/cds/common';
+using { cuid, managed, sap.common.Currencies } from '@sap/cds/common';
 
 entity Books : cuid, managed {
   title               : String(111);
@@ -43,8 +43,8 @@ entity OrderItems : cuid, managed {
   quantity  : Integer;
   netAmount : Decimal(9,2);
 }
-entity Wishlist {
-  key ID   : UUID;
-  book     : Association to Books;
+
+entity Wishlist : cuid, managed {
   userName : String;
+  book     : Association to Books;
 }

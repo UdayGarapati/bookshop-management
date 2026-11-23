@@ -10,4 +10,3 @@ service CatalogService {
     @readonly
     entity Categories as projection on my.Categories;
 }
-

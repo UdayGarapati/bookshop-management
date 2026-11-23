@@ -22,7 +22,14 @@
                     <!-- Order History Tab -->
                     <IconTabFilter id="ordersTab" icon="sap-icon://receipt" text="Order History">
                         <Table 
-                            items="{path: 'order>/Orders', parameters: {$expand: 'items'}}"
+                            items="{
+                                path: 'order>/Orders',
+                                parameters: {
+                                    $expand: 'items($expand=book)',
+                                    $filter: 'orderNumber ne null',
+                                    $orderby: 'orderNumber asc'
+                                }
+                            }"
                             class="sapUiResponsiveMargin">
                             <columns>
                                 <Column><Text text="Order Number"/></Column>
@@ -45,14 +52,16 @@
 
                     <!-- Wishlist Tab -->
                     <IconTabFilter id="wishlistTab" icon="sap-icon://favorite" text="Wishlist">
-                        <Table items="{path: 'order>/Wishlist'}">
+                        <Table items="{path: 'order>/Wishlist', parameters: {$expand: 'book'}}">
                             <columns>
+                                <Column><Text text="Book Title"/></Column>
                                 <Column><Text text="Book ID"/></Column>
                                 <Column><Text text="User"/></Column>
                             </columns>
                             <items>
                                 <ColumnListItem>
                                     <cells>
+                                        <Text text="{order>book/title}"/>
                                         <Text text="{order>book_ID}"/>
                                         <Text text="{order>userName}"/>
                                     </cells>
@@ -64,7 +73,6 @@
                     <!-- Sales Tab (Special Offers / Discounted Items) -->
                     <IconTabFilter id="salesTab" icon="sap-icon://sales-order" text="Sales &amp; Specials">
                         <MessageStrip text="Check out our weekly clearance items marked down by 20%!" type="Information" showIcon="true" class="sapUiMediumMarginBottom"/>
-                        <!-- Bind to filtered books or sales entity here -->
                     </IconTabFilter>
                 </items>
             </IconTabBar>

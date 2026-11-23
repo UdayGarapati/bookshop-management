@@ -3,8 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f">
-    
-    <f:DynamicPage id="detailPage">
+    <f:DynamicPage id="bookDetailPage" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
@@ -15,42 +14,56 @@
                 </f:actions>
             </f:DynamicPageTitle>
         </f:title>
-        
+
         <f:content>
-            <VBox class="sapUiResponsiveContentPadding">
-                <Panel headerText="Book Information" class="sapUiResponsiveMargin">
-                    <content>
-                        <VBox class="sapUiMediumMargin">
-                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="100%" class="sapUiMediumMarginBottom">
-                                <Title text="{title}" level="H3"/>
-                                <HBox alignItems="Center">
-                                    <Label text="Order Quantity:" class="sapUiTinyMarginEnd" design="Bold"/>
-                                    <StepInput id="orderStepInput" value="1" min="1" max="100" width="120px" class="sapUiSmallMarginEnd"/>
-                                    <Button text="Place Order" press=".onOrderPress" type="Emphasized"/>
-                                </HBox>
-                            </HBox>
-                            
-                            <!-- Stock Status -->
-                            <ObjectStatus 
-                                text="{= ${stock} !== undefined ? ${stock} + ' in stock' : '0 in stock' }" 
-                                state="{= ${stock} > 0 ? 'Success' : 'Error' }"
-                                class="sapUiSmallMarginBottom"/>
-                            
-                            <!-- Description -->
-                            <Label text="Description" design="Bold" class="sapUiTinyMarginTop"/>
-                            <Text text="{descr}" wrapping="true" class="sapUiSmallMarginBottom"/>
-                            
-                            <!-- ISBN & Category -->
-                            <Label text="ISBN" design="Bold"/>
-                            <Text text="{isbn}" class="sapUiSmallMarginBottom"/>
-                            
-                            <!-- Price -->
-                            <Label text="Price" design="Bold"/>
-                            <ObjectNumber number="{price}" unit="{currency_code}"/>
-                        </VBox>
-                    </content>
-                </Panel>
-            </VBox>
+            <Panel headerText="Book Information" class="sapUiResponsiveMargin" width="auto">
+                <VBox class="sapUiSmallMargin">
+                    <HBox justifyContent="SpaceBetween" alignItems="Center" wrap="Wrap">
+                        <Title text="{title}" level="H2"/>
+                        <HBox alignItems="Center">
+                            <Label text="Order Quantity:" labelFor="qtyStepInput" class="sapUiSmallMarginEnd"/>
+                            <StepInput
+                                id="qtyStepInput"
+                                value="{detailView>/quantity}"
+                                min="1"
+                                max="{= Number(${stock}) > 0 ? Number(${stock}) : 1 }"
+                                enabled="{= Number(${stock}) > 0 }"
+                                width="120px"
+                                class="sapUiSmallMarginEnd"/>
+                            <Button
+                                text="Place Order"
+                                type="Emphasized"
+                                press=".onPlaceOrder"
+                                enabled="{= Number(${stock}) > 0 }"/>
+                        </HBox>
+                    </HBox>
+
+                    <ObjectStatus
+                        text="{stock} in stock"
+                        state="{= Number(${stock}) > 0 ? 'Success' : 'Error' }"
+                        class="sapUiSmallMarginTopBottom"/>
+
+                    <VBox class="sapUiSmallMarginTop">
+                        <Label text="Description" design="Bold"/>
+                        <Text text="{descr}"/>
+                    </VBox>
+
+                    <VBox class="sapUiSmallMarginTop">
+                        <Label text="ISBN" design="Bold"/>
+                        <Text text="{isbn}"/>
+                    </VBox>
+
+                    <VBox class="sapUiSmallMarginTop">
+                        <Label text="Price" design="Bold"/>
+                        <ObjectNumber number="{price}" unit="{= ${currency_code} || 'EUR' }"/>
+                    </VBox>
+
+                    <VBox class="sapUiSmallMarginTop">
+                        <Label text="Expected Delivery Date" design="Bold"/>
+                        <Text text="{detailView>/expectedDeliveryDate} (7 days from order date)"/>
+                    </VBox>
+                </VBox>
+            </Panel>
         </f:content>
     </f:DynamicPage>
 </mvc:View>

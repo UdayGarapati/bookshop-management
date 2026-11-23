@@ -1,4 +1,24 @@
-ID,title,descr,author_ID,category_ID,isbn,coverImageURL,price,currency_code,discountPercentage,stock,unitsSold,averageRating
-book-01,Wuthering Heights,A classic novel of passion and tragedy on the Yorkshire moors.,auth-01,cat-01,9780141439556,https://images.unsplash.com/photo-1544947950-fa07a98d237f,12.50,EUR,10.00,15,120,4.50
-book-02,Design Patterns,Elements of Reusable Object-Oriented Software.,auth-02,cat-02,9780201633610,https://images.unsplash.com/photo-1532012197267-da84d127e765,45.00,EUR,0.00,8,340,4.80
-book-03,Cosmos,A personal voyage exploring the universe and science history.,auth-03,cat-03,9780345539434,https://images.unsplash.com/photo-1506880018603-83d5b814b5a6,19.99,EUR,15.00,25,210,4.90
+ID,title,descr,isbn,price,currency_code,stock
+32912423-74d1-4191-b3b4-53909796e959,Wuthering Heights,A classic novel of passion and tragedy on the Yorkshire moors.,9780141439556,12.50,EUR,7000
+0191c49a-e274-4b45-8f69-7987823f6687,Design Patterns,Elements of Reusable Object-Oriented Software.,9780201633610,45.00,EUR,9995
+666993a4-0466-4e5b-b99b-449e6f3b0c26,Cosmos,A personal voyage exploring the universe and science history.,9780345539434,19.99,EUR,10000
+11111111-1111-4111-8111-111111111101,Clean Code,A handbook of agile software craftsmanship and readable code.,9780132350884,38.50,EUR,42
+11111111-1111-4111-8111-111111111102,The Pragmatic Programmer,Your journey to mastery in modern software engineering.,9780135957059,44.00,EUR,35
+11111111-1111-4111-8111-111111111103,Designing Data-Intensive Applications,The big ideas behind reliable scalable and maintainable systems.,9781449373320,49.99,EUR,28
+11111111-1111-4111-8111-111111111104,Refactoring,Improving the design of existing code with proven patterns.,9780134757599,46.50,EUR,30
+11111111-1111-4111-8111-111111111105,Introduction to Algorithms,Comprehensive guide to modern algorithms and data structures.,9780262046305,75.00,EUR,18
+11111111-1111-4111-8111-111111111106,Effective Java,Best practices and design idioms for the Java platform.,9780134685991,42.00,EUR,50
+11111111-1111-4111-8111-111111111107,Domain-Driven Design,Tackling complexity in the heart of enterprise software.,9780321125217,52.00,EUR,22
+11111111-1111-4111-8111-111111111108,Clean Architecture,A craftsman guide to software structure and design.,9780134494166,36.00,EUR,40
+11111111-1111-4111-8111-111111111109,Dune,A sci-fi epic set on the desert planet Arrakis.,9780441172719,16.99,EUR,65
+11111111-1111-4111-8111-111111111110,1984,A dystopian novel exploring surveillance truth and freedom.,9780451524935,11.50,EUR,80
+11111111-1111-4111-8111-111111111111,The Hobbit,A fantasy adventure across Middle-earth to reclaim Erebor.,9780547928227,14.99,EUR,55
+11111111-1111-4111-8111-111111111112,Pride and Prejudice,A classic romance and social commentary in Regency England.,9780141439518,10.99,EUR,60
+11111111-1111-4111-8111-111111111113,To Kill a Mockingbird,A timeless story of justice and empathy in the American South.,9780061120084,13.50,EUR,48
+11111111-1111-4111-8111-111111111114,The Great Gatsby,A portrait of ambition and illusion in the Jazz Age.,9780743273565,11.99,EUR,70
+11111111-1111-4111-8111-111111111115,Sapiens,A brief history of humankind from ancient times to today.,9780062316097,18.50,EUR,90
+11111111-1111-4111-8111-111111111116,Atomic Habits,An easy and proven way to build good habits and break bad ones.,9780735211292,17.99,EUR,110
+11111111-1111-4111-8111-111111111117,Thinking Fast and Slow,An exploration of the two systems that drive how we think.,9780374533557,16.50,EUR,52
+11111111-1111-4111-8111-111111111118,A Brief History of Time,From the Big Bang to black holes explained for general readers.,9780553380163,15.99,EUR,45
+11111111-1111-4111-8111-111111111119,The Alchemist,A fable about following your dreams and personal legend.,9780062315007,13.99,EUR,75
+11111111-1111-4111-8111-111111111120,Project Hail Mary,A lone astronaut must save Earth from an extinction-level threat.,9780593135204,19.50,EUR,64

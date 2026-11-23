@@ -19,7 +19,6 @@
         <f:content>
             <VBox class="sapUiResponsiveContentPadding" width="100%">
                 
-                <!-- Search Toolbar -->
                 <Toolbar class="sapUiMediumMarginBottom">
                     <content>
                         <ToolbarSpacer/>
@@ -30,34 +29,33 @@
                     </content>
                 </Toolbar>
 
-                <!-- Books Table with OData V4 Binding Parameters -->
                 <Table 
-    id="booksTable"
-    items="{
-        path: '/Books',
-        parameters: {
-            $count: true,
-            $$updateGroupId: 'auto'
-        }
-    }"
-    class="sapUiResponsiveMargin"
-    width="auto"
-    inset="false">
-    <columns>
-        <Column width="35%"><Text text="Book Title"/></Column>
-        <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Description"/></Column>
-        <Column hAlign="End" width="20%"><Text text="Price"/></Column>
-    </columns>
-    <items>
-        <ColumnListItem type="Navigation" press=".onBookPress">
-            <cells>
-                <ObjectIdentifier title="{title}"/>
-                <Text text="{descr}"/>
-                <ObjectNumber number="{price}" unit="{currency}"/>
-            </cells>
-        </ColumnListItem>
-    </items>
-</Table>
+                    id="booksTable"
+                    items="{
+                        path: '/Books',
+                        parameters: {
+                            $count: true,
+                            $$updateGroupId: 'auto'
+                        }
+                    }"
+                    class="sapUiResponsiveMargin"
+                    width="auto"
+                    inset="false">
+                    <columns>
+                        <Column width="35%"><Text text="Book Title"/></Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Description"/></Column>
+                        <Column hAlign="End" width="20%"><Text text="Price"/></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Navigation" press=".onBookPress">
+                            <cells>
+                                <ObjectIdentifier title="{title}"/>
+                                <Text text="{descr}"/>
+                                <ObjectNumber number="{price}" unit="{currency/code}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
 
             </VBox>
         </f:content>

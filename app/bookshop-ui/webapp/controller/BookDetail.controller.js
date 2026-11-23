@@ -1,100 +1,146 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
-    "sap/m/MessageBox"
-], function (Controller, MessageToast, MessageBox) {
+    "sap/ui/core/UIComponent",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast"
+], function (Controller, UIComponent, JSONModel, Filter, FilterOperator, MessageBox, MessageToast) {
     "use strict";
 
     return Controller.extend("bookshop.ui.controller.BookDetail", {
         onInit: function () {
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.getRoute("Detail").attachMatched(this._onRouteMatched, this);
+            var oViewModel = new JSONModel({
+                quantity: 1,
+                expectedDeliveryDate: this._formatExpectedDeliveryDate(new Date())
+            });
+            this.getView().setModel(oViewModel, "detailView");
+
+            var oRouter = UIComponent.getRouterFor(this);
+            oRouter.getRoute("Detail").attachPatternMatched(this._onObjectMatched, this);
         },
 
-       _onRouteMatched: function (oEvent) {
-    var sBookId = oEvent.getParameter("arguments").bookId;
-    if (!sBookId) {
-        return;
-    }
-
-    var oView = this.getView();
-    var oElementBinding = oView.byId("detailPage"); // or bind via element
-    
-    oView.bindElement({
-        path: "/Books(" + sBookId + ")",
-        parameters: {
-            $$groupId: "$auto"
-        },
-        events: {
-            dataRequested: function () {
-                oView.setBusy(true);
-            },
-            dataReceived: function () {
-                oView.setBusy(false);
-            }
-        }
-    });
-},
-        onNavBack: function () {
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("Books");
-        },
-
-        onOrderPress: function () {
-            var oView = this.getView();
-            var oContext = oView.getBindingContext();
-            
-            if (!oContext) {
-                MessageBox.error("No book selected.");
+        _onObjectMatched: function (oEvent) {
+            var oArgs = oEvent.getParameter("arguments") || {};
+            var sBookId = oArgs.bookId;
+            if (!sBookId) {
                 return;
             }
 
-            var sBookId = oContext.getProperty("ID");
-            var fPrice = oContext.getProperty("price") || 0;
-            var sCurrency = oContext.getProperty("currency_code") || oContext.getProperty("currency") || "EUR";
-            var sBookTitle = oContext.getProperty("title");
-            
-            var oStepInput = oView.byId("orderStepInput");
-            var iQuantity = oStepInput ? oStepInput.getValue() : 1;
-            var fTotal = fPrice * iQuantity;
+            var oView = this.getView();
+            var oViewModel = oView.getModel("detailView");
+            oViewModel.setProperty("/quantity", 1);
+            oViewModel.setProperty("/expectedDeliveryDate", this._formatExpectedDeliveryDate(new Date()));
 
-            // Generate a random unique order number
-            var sOrderNumber = "ORD-" + Math.floor(100000 + Math.random() * 900000);
+            var oCatalogModel = oView.getModel();
+            var oListBinding = oCatalogModel.bindList("/Books", null, null, [
+                new Filter("ID", FilterOperator.EQ, sBookId)
+            ]);
 
-            // Access the order model bound to /orders/
-            var oDataModel = oView.getModel("order");
-            if (!oDataModel) {
-                // Fallback to default model if order model isn't explicitly named
-                oDataModel = oView.getModel();
+            oView.setBusy(true);
+            oListBinding.requestContexts(0, 1).then(function (aContexts) {
+                oView.setBusy(false);
+                if (aContexts && aContexts.length > 0) {
+                    oView.setBindingContext(aContexts[0]);
+                } else {
+                    oView.setBindingContext(null);
+                    MessageToast.show("Book not found.");
+                }
+            }).catch(function (oError) {
+                oView.setBusy(false);
+                var sMessage = (oError && oError.message) ? oError.message : "Failed to load book details.";
+                MessageBox.error(sMessage);
+            });
+        },
+
+        _formatExpectedDeliveryDate: function (oBaseDate) {
+            var oDate = oBaseDate ? new Date(oBaseDate) : new Date();
+            if (isNaN(oDate.getTime())) {
+                oDate = new Date();
+            }
+            oDate.setDate(oDate.getDate() + 7);
+
+            return oDate.toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "2-digit"
+            });
+        },
+
+        onNavBack: function () {
+            UIComponent.getRouterFor(this).navTo("Dashboard");
+        },
+
+        onPlaceOrder: function () {
+            var oView = this.getView();
+            var oBookContext = oView.getBindingContext();
+            if (!oBookContext) {
+                MessageToast.show("Book details not loaded yet.");
+                return;
             }
 
-            // Create payload for the OrderService using currency_code
-            var oOrderData = {
-                orderNumber: sOrderNumber,
-                totalPrice: fTotal,
-                currency_code: sCurrency,
-                status: "PLACED",
+            var oBook = oBookContext.getObject() || {};
+            var oViewModel = oView.getModel("detailView");
+            var iQuantity = parseInt(oViewModel.getProperty("/quantity"), 10) || 1;
+            var iStock = parseInt(oBook.stock, 10) || 0;
+
+            if (iStock <= 0 || iQuantity > iStock) {
+                MessageBox.warning("Insufficient stock available for this order.");
+                return;
+            }
+
+            var oOrderDate = new Date();
+            var sExpectedDelivery = this._formatExpectedDeliveryDate(oOrderDate);
+            oViewModel.setProperty("/expectedDeliveryDate", sExpectedDelivery);
+
+            var fUnitPrice = parseFloat(oBook.price) || 0;
+            var sTotalPrice = (fUnitPrice * iQuantity).toFixed(2);
+            var sCurrency = oBook.currency_code || "EUR";
+
+            var oOrderModel = oView.getModel("order");
+            var oListBinding = oOrderModel.bindList("/Orders");
+
+            var oCreatedContext = oListBinding.create({
+                currency: sCurrency,
+                totalPrice: sTotalPrice,
                 items: [
                     {
-                        book_ID: sBookId,
+                        book_ID: oBook.ID,
                         quantity: iQuantity,
-                        netAmount: fTotal
+                        netAmount: sTotalPrice
                     }
                 ]
-            };
+            });
 
-            // Submit POST request to OData V4 /orders/Orders
-            var oListBinding = oDataModel.bindList("/Orders");
-            try {
-                oListBinding.create(oOrderData);
-                oDataModel.submitBatch("$auto").then(function() {
-                    MessageBox.success("Successfully placed order #" + sOrderNumber + " for " + iQuantity + " copy/copies of '" + sBookTitle + "'!");
-                }).catch(function(oError) {
-                    MessageBox.error("Failed to place order: " + (oError.message || "Unknown error"));
+            oView.setBusy(true);
+            oCreatedContext.created().then(function () {
+                var sOrderNumber = oCreatedContext.getProperty("orderNumber") || "Confirmed";
+                oViewModel.setProperty("/quantity", 1);
+
+                return Promise.resolve(oBookContext.refresh()).then(function () {
+                    oView.setBusy(false);
+                    MessageBox.success(
+                        "Order " + sOrderNumber + " placed successfully!\n\n" +
+                        "Book: " + oBook.title + "\n" +
+                        "Quantity: " + iQuantity + "\n" +
+                        "Total Amount: " + sTotalPrice + " " + sCurrency + "\n" +
+                        "Expected Delivery Date: " + sExpectedDelivery + " (7 days from order date)",
+                        {
+                            title: "Order Confirmed"
+                        }
+                    );
                 });
-            } catch (err) {
-                MessageBox.error("Error submitting order: " + err.message);
-            }
+            }).catch(function (oError) {
+                oView.setBusy(false);
+                if (oCreatedContext && oCreatedContext.delete) {
+                    oCreatedContext.delete("$auto").catch(function () {
+                        // Ignore cleanup error on failed transient context
+                    });
+                }
+                var sMessage = (oError && oError.message) ? oError.message : "Unknown error";
+                MessageBox.error("Failed to place order: " + sMessage);
+            });
         }
     });
 });
