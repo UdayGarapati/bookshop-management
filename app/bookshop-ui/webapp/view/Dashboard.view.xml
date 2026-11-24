@@ -2,52 +2,69 @@
     controllerName="bookshop.ui.controller.Dashboard"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    xmlns:f="sap.f">
-
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core">
     <f:DynamicPage id="dashboardPage" headerExpanded="true">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="Bookshop Management Dashboard"/>
+                    <Title text="Bookshop Management Dashboard" level="H1"/>
                 </f:heading>
+                <f:actions>
+                    <Button
+                        text="Cart ({cart>/totalCount})"
+                        icon="sap-icon://cart"
+                        type="Emphasized"
+                        press=".onOpenCartDialog"/>
+                </f:actions>
             </f:DynamicPageTitle>
         </f:title>
 
         <f:content>
-            <VBox class="sapUiResponsiveContentPadding" width="100%">
+            <VBox class="sapUiResponsiveMargin">
+                <Title text="Bookshop Management &amp; Storefront" level="H3" class="sapUiMediumMarginBottom"/>
 
-                <Title text="Bookshop Management &amp; Storefront" level="H2" class="sapUiMediumMarginTop sapUiSmallMarginBottom"/>
-
-                <HBox wrap="Wrap" class="sapUiMediumMarginBottom">
-                    <!-- Books Catalog Tile -->
-                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="Books Catalog" subheader="Explore &amp; search catalog" press=".onTilePress">
+                <HBox wrap="Wrap" class="sapUiMediumMarginTop">
+                    <GenericTile
+                        header="Books Catalog"
+                        subheader="Explore &amp; search catalog"
+                        press=".onNavToCatalog"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
                         <TileContent>
-                            <NumericContent icon="sap-icon://book" value="Catalog"/>
+                            <ImageContent src="sap-icon://book"/>
                         </TileContent>
                     </GenericTile>
 
-                    <!-- Order History Tile -->
-                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="Order History" subheader="View submitted orders" press=".onNavigateToOrders">
+                    <GenericTile
+                        header="Order History"
+                        subheader="View submitted orders"
+                        press=".onNavToOrders"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
                         <TileContent>
-                            <NumericContent icon="sap-icon://receipt" value="Orders"/>
+                            <ImageContent src="sap-icon://sales-order"/>
                         </TileContent>
                     </GenericTile>
 
-                    <!-- Wishlist Tile -->
-                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="My Wishlist" subheader="Saved favorite books" press=".onNavigateToWishlist">
+                    <GenericTile
+                        header="My Wishlist"
+                        subheader="Saved favorite books"
+                        press=".onNavToWishlist"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
                         <TileContent>
-                            <NumericContent icon="sap-icon://favorite" value="Wishlist"/>
+                            <ImageContent src="sap-icon://favorite"/>
                         </TileContent>
                     </GenericTile>
 
-                    <!-- Sales & Specials Tile -->
-                    <GenericTile class="sapUiTinyMarginEnd sapUiTinyMarginBottom" header="Sales &amp; Specials" subheader="Discounts &amp; clearance" press=".onNavigateToSales">
+                    <GenericTile
+                        header="Sales &amp; Specials"
+                        subheader="Discounts &amp; clearance"
+                        press=".onNavToSales"
+                        class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
                         <TileContent>
-                            <NumericContent icon="sap-icon://sales-order" value="Sales"/>
+                            <ImageContent src="sap-icon://sales-quote"/>
                         </TileContent>
                     </GenericTile>
                 </HBox>
-
             </VBox>
         </f:content>
     </f:DynamicPage>

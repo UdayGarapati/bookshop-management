@@ -48,3 +48,11 @@ entity Wishlist : cuid, managed {
   userName : String;
   book     : Association to Books;
 }
+
+entity CartItems : cuid, managed {
+    book      : Association to Books;
+    quantity  : Integer default 1;
+    unitPrice : Decimal(10,2);
+    netAmount : Decimal(10,2);
+    currency  : String(3) default 'EUR';
+}

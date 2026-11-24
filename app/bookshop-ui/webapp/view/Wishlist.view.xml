@@ -17,6 +17,7 @@
         <f:content>
             <VBox class="sapUiResponsiveContentPadding" width="100%">
                 <Table
+                    id="wishlistTable"
                     items="{
                         path: 'order>/Wishlist',
                         parameters: {
@@ -33,14 +34,30 @@
                     <columns>
                         <Column><Text text="Book Title"/></Column>
                         <Column><Text text="Saved By User"/></Column>
-                        <Column hAlign="End"><Text text="Price"/></Column>
+                        <Column hAlign="End" width="10rem"><Text text="Price"/></Column>
+                        <Column hAlign="End" width="18rem"><Text text="Actions"/></Column>
                     </columns>
                     <items>
-                        <ColumnListItem>
+                        <ColumnListItem vAlign="Middle">
                             <cells>
                                 <ObjectIdentifier title="{order>book/title}"/>
                                 <Text text="{order>userName}"/>
-                                <ObjectNumber number="{order>book/price}" unit="EUR"/>
+                                <ObjectNumber
+                                    number="{order>book/price}"
+                                    unit="{= ${order>book/currency_code} || 'EUR' }"
+                                    emphasized="true"/>
+                                <HBox justifyContent="End" alignItems="Center" class="sapUiTinyGap">
+                                    <Button
+                                        text="Add to Cart"
+                                        icon="sap-icon://cart"
+                                        type="Default"
+                                        press=".onAddToCart"/>
+                                    <Button
+                                        text="Place Order"
+                                        icon="sap-icon://accept"
+                                        type="Emphasized"
+                                        press=".onPlaceOrder"/>
+                                </HBox>
                             </cells>
                         </ColumnListItem>
                     </items>
